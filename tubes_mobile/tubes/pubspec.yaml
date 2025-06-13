@@ -33,13 +33,14 @@ dependencies:
   cool_alert: ^2.0.1
   url_launcher: ^6.0.9
   http: ^1.2.2
-  fluttertoast: 8.2.3
-  flutter_secure_storage: ^9.0.0
+  fluttertoast: ^8.2.10
+  flutter_secure_storage: ^8.0.0
   shared_preferences: ^2.3.2
-  flutter_dotenv: ^5.1.0
+  flutter_dotenv: ^5.2.1
   colorful_safe_area: ^1.0.0
   flare_flutter: ^3.0.2
-
+  intl: ^0.18.0
+  
   
 
   
@@ -78,21 +79,22 @@ flutter:
     - assets/images/bca.png
     - assets/images/bni.webp
     - assets/images/dana.png
+    - assets/images/headline.png
 
-  fonts:
-    - family: ZhiMangXing
-      fonts:
-        - asset: assets/fonts/ZhiMangXing-Regular.ttf
+  # fonts:
+    # - family: ZhiMangXing
+    #   fonts:
+    #     - asset: assets/fonts/ZhiMangXing-Regular.ttf
 
-    - family: Poppins
-      fonts:
-        - asset: assets/fonts/Poppins-Regular.ttf
-        - asset: assets/fonts/Poppins-Bold.ttf
+    # - family: Poppins
+    #   fonts:
+    #     - asset: assets/fonts/Poppins-Regular.ttf
+    #     - asset: assets/fonts/Poppins-Bold.ttf
 
-    - family: Poppins
-      fonts:
-        - asset: assets/fonts/JosefinSans-Regular.ttf
-        - asset: assets/fonts/JosefinSans-Bold.ttf
+    # - family: Poppins
+    #   fonts:
+    #     - asset: assets/fonts/JosefinSans-Regular.ttf
+    #     - asset: assets/fonts/JosefinSans-Bold.ttf
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package

@@ -4,6 +4,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
 import 'dart:io';
 import 'dart:convert';
+import 'package:flutter/services.dart';
 
 class EditProfilePage extends StatefulWidget {
   final int userId;
@@ -30,7 +31,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
   final List<String> _genderOptions = ['Laki-laki', 'Perempuan', 'Non-binery'];
 
-  static const String baseUrl = 'http://localhost:3000/api';
+  static const String baseUrl = 'http://10.0.2.2:3000/api';
 
   @override
   void initState() {
@@ -91,10 +92,11 @@ class _EditProfilePageState extends State<EditProfilePage> {
             _selectedGender = 'Laki-laki';
           }
 
-          if (userData['birth_date'] != null &&
-              userData['birth_date'].toString().isNotEmpty) {
+          if (userData['tanggal_lahir'] != null &&
+              userData['tanggal_lahir'].toString().isNotEmpty) {
             try {
-              _selectedDate = DateTime.parse(userData['birth_date'].toString());
+              _selectedDate =
+                  DateTime.parse(userData['tanggal_lahir'].toString());
             } catch (e) {
               print('Error parsing birth date: $e');
               _selectedDate = DateTime(1990, 1, 1);
@@ -271,8 +273,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
         await _uploadProfilePicture();
       }
 
-      // Format birth_date to YYYY-MM-DD format
-      String formattedBirthDate =
+      // Format tanggal_lahir to YYYY-MM-DD format
+      String formattedTanggalLahir =
           DateFormat('yyyy-MM-dd').format(_selectedDate);
 
       // Then update profile data with ALL fields
@@ -281,7 +283,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
         'fullname': _fullnameController.text.trim(),
         'phone': _phoneController.text.trim(),
         'jenis_kelamin': _selectedGender,
-        'tanggal_lahir': formattedBirthDate,
+        'tanggal_lahir': DateFormat('yyyy-MM-dd').format(_selectedDate),
       };
 
       // Add profile_picture if we have a current one
@@ -337,7 +339,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
   String _getProfileImageUrl() {
     if (_currentProfilePicture != null && _currentProfilePicture!.isNotEmpty) {
       if (_currentProfilePicture!.startsWith('/images/')) {
-        return 'http://localhost:3000${_currentProfilePicture!}';
+        return 'http://10.0.2.2:3000${_currentProfilePicture!}';
       }
       return _currentProfilePicture!;
     }
@@ -628,6 +630,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
   Widget _buildFormField(
       String label, TextEditingController controller, IconData icon) {
+    // Deteksi jika field phone
+    final isPhone = label.toLowerCase().contains('telepon') ||
+        label.toLowerCase().contains('phone');
     return Container(
       margin: const EdgeInsets.only(bottom: 16),
       decoration: BoxDecoration(
@@ -635,19 +640,41 @@ class _EditProfilePageState extends State<EditProfilePage> {
         borderRadius: BorderRadius.circular(12),
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
         child: Row(
           children: [
             Icon(icon, color: Colors.grey),
             const SizedBox(width: 16),
             Expanded(
-              child: TextField(
-                controller: controller,
-                decoration: InputDecoration(
-                  labelText: label,
-                  border: InputBorder.none,
-                  floatingLabelBehavior: FloatingLabelBehavior.never,
-                ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    label,
+                    style: TextStyle(
+                      color: Colors.grey[600],
+                      fontSize: 12,
+                    ),
+                  ),
+                  const SizedBox(height: 4),
+                  TextField(
+                    controller: controller,
+                    keyboardType:
+                        isPhone ? TextInputType.number : TextInputType.text,
+                    inputFormatters: isPhone
+                        ? [FilteringTextInputFormatter.digitsOnly]
+                        : null,
+                    decoration: const InputDecoration(
+                      border: InputBorder.none,
+                      contentPadding: EdgeInsets.zero,
+                      isDense: true,
+                    ),
+                    style: const TextStyle(
+                      color: Colors.black87,
+                      fontSize: 16,
+                    ),
+                  ),
+                ],
               ),
             ),
           ],

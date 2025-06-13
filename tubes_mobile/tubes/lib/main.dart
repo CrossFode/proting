@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:tubes/Home/Historypage.dart';
 import 'package:tubes/Home/Homepage.dart';
 import 'package:tubes/Home/Profilepage.dart';
@@ -6,7 +7,7 @@ import 'package:tubes/sreens/login.dart';
 import 'package:tubes/sreens/registrasi.dart';
 import 'package:tubes/sreens/opening.dart';
 
-void main() {
+Future<void> main() async {
   runApp(const MyApp());
 }
 
@@ -45,20 +46,26 @@ class MyApp extends StatelessWidget {
 }
 
 class Navbar extends StatefulWidget {
-  const Navbar({super.key});
+  final int initialIndex;
+  const Navbar({super.key, this.initialIndex = 0});
 
   @override
   _NavbarState createState() => _NavbarState();
 }
 
 class _NavbarState extends State<Navbar> {
-  int _currentIndex = 0;
+  late int _currentIndex;
   final List<Widget> _pages = [
     const Homepage(),
-    const HistoryPage(),
+    const Historypage(),
     const Profilepage(), // Profile page placeholder
   ];
 
+  @override
+  void initState() {
+    super.initState();
+    _currentIndex = widget.initialIndex;
+  }
   void _onItemClick(int index) {
     setState(() {
       _currentIndex = index;

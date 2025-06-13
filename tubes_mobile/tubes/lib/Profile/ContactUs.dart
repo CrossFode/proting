@@ -37,8 +37,7 @@ class _ContactUsPageState extends State<ContactUsPage> {
 
   // Function to submit the form
   Future<void> _submitForm() async {
-    final url = Uri.parse('http://127.0.0.1:3000/api/contact_us');
-    // 'http://192.168.100.12:/api/contact_us');
+    final url = Uri.parse('http://localhost:3000/api/contact_us');
     final body = {
       'first_name': _firstNameController.text,
       'last_name': _lastNameController.text,

@@ -9,7 +9,7 @@ class Homepage extends StatelessWidget {
 
   Future<List<dynamic>> fetchCampaigns() async {
     final response =
-        await http.get(Uri.parse('http://192.168.100.7:3000/api/campaigns'));
+        await http.get(Uri.parse('http://10.0.2.2:3000/api/campaigns'));
 
     if (response.statusCode == 200) {
       return json.decode(response.body);
@@ -67,14 +67,31 @@ class Trending extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(16.0), // Optional: add padding
-      child: const Text(
-        'Trending Now', // Your text
-        style: TextStyle(
-          fontSize: 20.0, // Font size
-          fontWeight: FontWeight.bold, // Font weight
-          color: Colors.black, // Text color
-        ),
+      padding: EdgeInsets.all(16.0),
+      child: Stack(
+        children: [
+          // Outline
+          Text(
+            'TRENDING NOW ',
+            style: TextStyle(
+              fontSize: 30.0,
+              fontWeight: FontWeight.bold,
+              foreground: Paint()
+                ..style = PaintingStyle.stroke
+                ..strokeWidth = 3
+                ..color = const Color.fromARGB(255, 0, 0, 0), // Outline color
+            ),
+          ),
+          // Fill
+          const Text(
+            'TRENDING NOW ',
+            style: TextStyle(
+              fontSize: 30.0,
+              fontWeight: FontWeight.bold,
+              color: Color.fromARGB(255, 238, 228, 152),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -179,6 +196,7 @@ class BottomBox extends StatelessWidget {
                         context,
                         MaterialPageRoute(
                             builder: (context) => Donproto(
+                                  id: int.parse(campaign['id'].toString()),
                                   name: campaign['name'],
                                   description: campaign['description'],
                                 )),

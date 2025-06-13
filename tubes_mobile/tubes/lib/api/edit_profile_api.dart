@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:http/http.dart' as http;
 
 class EditProfileAPI {
-  static const String baseUrl = 'http://127.0.0.1:3000/api';
+  static const String baseUrl = 'http://localhost:3000/api';
 
   /// Fetch Profile by ID
   static Future<Map<String, dynamic>?> fetchProfile(String userId) async {

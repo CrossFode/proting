@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:tubes/Home/Homepage.dart';
+import 'package:tubes/Home/donate/payments.dart';
+
 
 class Donproto extends StatelessWidget {
+  final int id;
   final String name;
   final String description;
 
-  const Donproto({Key? key, required this.name, required this.description}) : super(key: key);
+  const Donproto({Key? key, required this.id, required this.name, required this.description}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -85,18 +88,28 @@ class Donproto extends StatelessWidget {
                             Align(
                               alignment: Alignment.centerRight,
                               child: ElevatedButton(
-                                onPressed: () {
-                                  // Handle donation logic here
-                                },
-                                child: Text('Donate'),
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: const Color.fromARGB(255, 236, 243, 33),
-                                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                ),
-                              ),
+  onPressed: () {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => PaymentPage(
+          campaignId: id.toString(), // Ganti sesuai ID campaign jika ada
+          campaignName: name,
+          donationAmount: _donationController.text
+          
+        ),
+      ),
+    );
+  },
+  child: Text('Donate'),
+  style: ElevatedButton.styleFrom(
+    backgroundColor: const Color.fromARGB(255, 236, 243, 33),
+    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(10),
+    ),
+  ),
+),
                             ),
                           ],
                         ),
